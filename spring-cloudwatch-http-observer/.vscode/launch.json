@@ -1,0 +1,15 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-MetricscaptureApplication<metricscapture>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "io.pratik.metricscapture.MetricscaptureApplication",
+            "projectName": "metricscapture",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
