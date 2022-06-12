@@ -1,0 +1,1 @@
+This is a minimal Spring Boot project demonstrating how to use Lombok along with MapStruct.
