@@ -1,4 +1,4 @@
-package de.beyondjava.employees;
+package de.beyondjava.business.employees;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

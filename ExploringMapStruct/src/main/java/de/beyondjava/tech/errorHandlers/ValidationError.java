@@ -1,4 +1,4 @@
-package de.beyondjava.configuration;
+package de.beyondjava.tech.errorHandlers;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

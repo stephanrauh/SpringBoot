@@ -1,5 +1,8 @@
-package de.beyondjava.configuration;
+package de.beyondjava.tech.errorHandlers;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.ToString;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -8,6 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
@@ -39,4 +43,12 @@ public class GlobalMethodArgumentNotValidExceptionHandler {
     }
 
 
+    @Getter
+    @AllArgsConstructor
+    @ToString
+    public static class ValidationErrorList {
+        private final int status;
+        private final String message;
+        private final List<ValidationError> fieldErrors = new ArrayList<>();
+    }
 }

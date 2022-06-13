@@ -1,4 +1,4 @@
-package de.beyondjava.tech.errorHandlers.configuration;
+package de.beyondjava.tech.startup;
 
 import de.beyondjava.business.employees.Employee;
 import de.beyondjava.business.employees.EmployeeMapper;

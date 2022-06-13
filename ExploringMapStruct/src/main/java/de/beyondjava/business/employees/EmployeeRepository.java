@@ -1,4 +1,4 @@
-package de.beyondjava.employees;
+package de.beyondjava.business.employees;
 
 import org.springframework.data.repository.CrudRepository;
 
