@@ -1,11 +1,9 @@
-package de.beyondjava.configuration;
+package de.beyondjava.tech.errorHandlers.configuration;
 
-import de.beyondjava.employees.Employee;
-import de.beyondjava.employees.EmployeeMapper;
-import de.beyondjava.employees.EmployeeMapperImpl;
-import de.beyondjava.employees.EmployeeRepository;
+import de.beyondjava.business.employees.Employee;
+import de.beyondjava.business.employees.EmployeeMapper;
+import de.beyondjava.business.employees.EmployeeRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
