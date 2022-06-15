@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### embedded H2 database
+/data/
