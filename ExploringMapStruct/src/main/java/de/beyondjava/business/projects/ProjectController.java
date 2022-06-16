@@ -6,12 +6,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -34,14 +31,16 @@ public class ProjectController {
         return projectService.findAll();
     }
 
+    @GetMapping("/find")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ProjectDto> findProjectsByProjectName(@RequestParam String projectName) {
+        return projectService.findProjectsByProjectName(projectName);
+    }
+
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ProjectDto findOne(@PathVariable("id") int id) {
-        var maybeProjectDto = projectService.findById(id);
-        if (null != maybeProjectDto) {
-            return maybeProjectDto;
-        }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        return projectService.findById(id);
     }
 
     /**
@@ -62,7 +61,7 @@ public class ProjectController {
         var details = errors.stream().map(error -> {
             String fieldName = ((FieldError) error).getField();
             String errorMessage = error.getDefaultMessage();
-            return "\n" +  fieldName + ":" + errorMessage;
+            return "\n" + fieldName + ":" + errorMessage;
         }).collect(Collectors.joining());
         return result;
     }

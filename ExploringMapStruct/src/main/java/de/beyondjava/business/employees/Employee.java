@@ -1,15 +1,15 @@
 package de.beyondjava.business.employees;
 
+import de.beyondjava.business.projects.Project;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 @Data
@@ -29,4 +29,8 @@ public class Employee {
     @NotBlank(message = "Don't be shy and tell us your last name.")
     @Size(min = 3, max = 20)
     private String lastName;
+
+    @NonNull
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Project> projects;
 }

@@ -2,6 +2,7 @@ package de.beyondjava.business.employees;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.val;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,20 +16,17 @@ public class EmployeeService {
     private EmployeeRepository employeeRepository;
 
     public void save(EmployeeDto employeeDto) {
-        var employee = employeeMapper.dtoToEntity(employeeDto);
+        val employee = employeeMapper.dtoToEntity(employeeDto);
         employeeRepository.save(employee);
     }
 
     public List<EmployeeDto> findAll() {
-        var employees = employeeRepository.findAll();
+        val employees = employeeRepository.findAll();
         return employeeMapper.entityToDTO(employees);
     }
 
     public EmployeeDto findById(long id) {
-        var employee = employeeRepository.findById(id);
-        if (employee.isPresent()) {
-            return employeeMapper.entityToDTO(employee.get());
-        }
-        return null;
+        val employee = employeeRepository.findById(id).orElseThrow();
+        return employeeMapper.entityToDTO(employee);
     }
 }

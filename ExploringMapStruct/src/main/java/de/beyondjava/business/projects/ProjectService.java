@@ -2,6 +2,7 @@ package de.beyondjava.business.projects;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.val;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,20 +16,21 @@ public class ProjectService {
     private ProjectRepository projectRepository;
 
     public void save(ProjectDto projectDto) {
-        var project = projectMapper.dtoToEntity(projectDto);
+        val project = projectMapper.dtoToEntity(projectDto);
         projectRepository.save(project);
     }
 
     public List<ProjectDto> findAll() {
-        var projects = projectRepository.findAll();
+        val projects = projectRepository.findAll();
         return projectMapper.entityToDTO(projects);
     }
 
+    public List<ProjectDto> findProjectsByProjectName(String projectName) {
+        return projectRepository.findProjectDtosByProjectName(projectName);
+    }
+
     public ProjectDto findById(long id) {
-        var project = projectRepository.findById(id);
-        if (project.isPresent()) {
-            return projectMapper.entityToDTO(project.get());
-        }
-        return null;
+        val project = projectRepository.findById(id);
+        return projectMapper.entityToDTO(project.orElseThrow());
     }
 }
