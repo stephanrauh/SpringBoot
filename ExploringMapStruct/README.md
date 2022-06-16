@@ -16,6 +16,9 @@ technical informations, such as primary keys.
 ## Lombok
 Lombok seems to be a first-class citizen of Spring Boot nowadays, so let's use it to reduce the amount of boiler-plate code.
 
+I'm also experimenting the Lombok's `val` keyword. It's a pity that `val` didn't make it to the Java language,
+but it seems `val` is a useful workaround. There's even IntelliJ support for it.
+
 ## Using records instead of Lombok
 By definition, DTOs are immutable data classes, so it sounds like a good idea to implement the DTO as a record. Mapstruct
 generates the ugly parts of the code (i.e. using the constructur which may have dozens of parameters)
@@ -24,9 +27,28 @@ and hides it from you. So you're working with code that looks clean enough.
 The only challenge is you need to convince your code formatter to format the record definition nicely. By default,
 the entire record definition is single line, which looks a bit weird for a data class.
 
+## Creating records directly from a JPA query in a repository
+You can also return records from a repository:
+```java
+@Query("""
+       SELECT new de.beyondjava.business.projects.ProjectDto(
+              p.name, p.description)
+       FROM Project p
+       WHERE LOWER(p.name) = LOWER(:projectName)
+       """)
+List<ProjectDto> findProjectDtosByProjectName(
+                     @Param("projectName") String projectName);
+```
+
 ## Java Bean Validation
 Controllers, DTOs, and Entities make use of the bean validation annotations. There's also a global error handler
 converting the technical messages Spring generates to more user-friendly messages.
+
+## Global and local error handlers
+The project has two global error handlers, one of them catching validation errors, the other catching the 
+"ElementNotFoundException" thrown by Optional.orElseThrow().
+
+For the sake of demonstration, there's also an exception handler in a controller.
 
 ## Getting the application up and running
 It's a simple Maven project running on Java 17. You can start it
