@@ -34,3 +34,6 @@ build/
 
 ### embedded H2 database
 /data/
+
+### OSX
+.DS_Store
