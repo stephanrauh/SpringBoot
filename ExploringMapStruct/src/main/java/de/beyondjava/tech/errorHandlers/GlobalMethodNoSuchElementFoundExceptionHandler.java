@@ -13,7 +13,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
-public class GlobalMethodNochSuchElementFoundExceptionHandler {
+public class GlobalMethodNoSuchElementFoundExceptionHandler {
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity<String> noSuchElementException(NoSuchElementException ex) {
         return new ResponseEntity("Couldn't find the resource", NOT_FOUND);
