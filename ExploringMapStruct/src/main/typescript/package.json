@@ -1,0 +1,14 @@
+{
+  "name": "sql-generator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "sql-generator.ts",
+  "scripts": {
+    "run": "npx ts-node sql-generator.ts"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@types/node": "^18.0.0"
+  }
+}
