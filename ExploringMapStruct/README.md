@@ -56,3 +56,12 @@ It's a simple Maven project running on Java 17. You can start it
 - or by starting the class de.beyondjava.ExploringMapStructApplication.
 
 There's also a small Postman collection of the API calls.
+
+## Creating test data
+The `src/main/typescript` folder contains a small script generating test data. Just open a terminal in this folder and run
+
+```
+npm run run
+```
+
+(no typo - I've really called the script "run" because it types fast).
