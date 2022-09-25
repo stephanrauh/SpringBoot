@@ -1,0 +1,664 @@
+Resources:
+  SpringBootOnFargateVpc2AFBEEAB:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsHostnames: true
+      EnableDnsSupport: true
+      InstanceTenancy: default
+      Tags:
+        - Key: Name
+          Value: SpringBootOnFargate/SpringBootOnFargateVpc
+    Metadata:
+      aws:cdk:path: SpringBootOnFargate/SpringBootOnFargateVpc/Resource
+  SpringBootOnFargateVpcPublicSubnet1Subnet0FFC9326:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId:
+        Ref: SpringBootOnFargateVpc2AFBEEAB
+      AvailabilityZone: eu-central-1a
+      CidrBlock: 10.0.0.0/19
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: aws-cdk:subnet-name
+          Value: Public
+        - Key: aws-cdk:subnet-type
+          Value: Public
+        - Key: Name
+          Value: SpringBootOnFargate/SpringBootOnFargateVpc/PublicSubnet1
+    Metadata:
+      aws:cdk:path: SpringBootOnFargate/SpringBootOnFargateVpc/PublicSubnet1/Subnet
+  SpringBootOnFargateVpcPublicSubnet1RouteTable80DA49AE:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:
+        Ref: SpringBootOnFargateVpc2AFBEEAB
+      Tags:
+        - Key: Name
+          Value: SpringBootOnFargate/SpringBootOnFargateVpc/PublicSubnet1
+    Metadata:
+      aws:cdk:path: SpringBootOnFargate/SpringBootOnFargateVpc/PublicSubnet1/RouteTable
+  SpringBootOnFargateVpcPublicSubnet1RouteTableAssociationE5DF8C67:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: SpringBootOnFargateVpcPublicSubnet1RouteTable80DA49AE
+      SubnetId:
+        Ref: SpringBootOnFargateVpcPublicSubnet1Subnet0FFC9326
+    Metadata:
+      aws:cdk:path: SpringBootOnFargate/SpringBootOnFargateVpc/PublicSubnet1/RouteTableAssociation
+  SpringBootOnFargateVpcPublicSubnet1DefaultRoute37FB12E3:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId:
+        Ref: SpringBootOnFargateVpcPublicSubnet1RouteTable80DA49AE
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId:
+        Ref: SpringBootOnFargateVpcIGW8EC4670F
+    DependsOn:
+      - SpringBootOnFargateVpcVPCGW20F9BFD1
+    Metadata:
+      aws:cdk:path: SpringBootOnFargate/SpringBootOnFargateVpc/PublicSubnet1/DefaultRoute
+  SpringBootOnFargateVpcPublicSubnet1EIPDBE2363D:
+    Type: AWS::EC2::EIP
+    Properties:
+      Domain: vpc
+      Tags:
+        - Key: Name
+          Value: SpringBootOnFargate/SpringBootOnFargateVpc/PublicSubnet1
+    Metadata:
+      aws:cdk:path: SpringBootOnFargate/SpringBootOnFargateVpc/PublicSubnet1/EIP
+  SpringBootOnFargateVpcPublicSubnet1NATGateway178EBF52:
+    Type: AWS::EC2::NatGateway
+    Properties:
+      SubnetId:
+        Ref: SpringBootOnFargateVpcPublicSubnet1Subnet0FFC9326
+      AllocationId:
+        Fn::GetAtt:
+          - SpringBootOnFargateVpcPublicSubnet1EIPDBE2363D
+          - AllocationId
+      Tags:
+        - Key: Name
+          Value: SpringBootOnFargate/SpringBootOnFargateVpc/PublicSubnet1
+    DependsOn:
+      - SpringBootOnFargateVpcPublicSubnet1DefaultRoute37FB12E3
+      - SpringBootOnFargateVpcPublicSubnet1RouteTableAssociationE5DF8C67
+    Metadata:
+      aws:cdk:path: SpringBootOnFargate/SpringBootOnFargateVpc/PublicSubnet1/NATGateway
+  SpringBootOnFargateVpcPublicSubnet2Subnet7AC4180E:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId:
+        Ref: SpringBootOnFargateVpc2AFBEEAB
+      AvailabilityZone: eu-central-1b
+      CidrBlock: 10.0.32.0/19
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: aws-cdk:subnet-name
+          Value: Public
+        - Key: aws-cdk:subnet-type
+          Value: Public
+        - Key: Name
+          Value: SpringBootOnFargate/SpringBootOnFargateVpc/PublicSubnet2
+    Metadata:
+      aws:cdk:path: SpringBootOnFargate/SpringBootOnFargateVpc/PublicSubnet2/Subnet
+  SpringBootOnFargateVpcPublicSubnet2RouteTable130C85E6:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:
+        Ref: SpringBootOnFargateVpc2AFBEEAB
+      Tags:
+        - Key: Name
+          Value: SpringBootOnFargate/SpringBootOnFargateVpc/PublicSubnet2
+    Metadata:
+      aws:cdk:path: SpringBootOnFargate/SpringBootOnFargateVpc/PublicSubnet2/RouteTable
+  SpringBootOnFargateVpcPublicSubnet2RouteTableAssociationAECAA1D0:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: SpringBootOnFargateVpcPublicSubnet2RouteTable130C85E6
+      SubnetId:
+        Ref: SpringBootOnFargateVpcPublicSubnet2Subnet7AC4180E
+    Metadata:
+      aws:cdk:path: SpringBootOnFargate/SpringBootOnFargateVpc/PublicSubnet2/RouteTableAssociation
+  SpringBootOnFargateVpcPublicSubnet2DefaultRoute55EEEF14:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId:
+        Ref: SpringBootOnFargateVpcPublicSubnet2RouteTable130C85E6
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId:
+        Ref: SpringBootOnFargateVpcIGW8EC4670F
+    DependsOn:
+      - SpringBootOnFargateVpcVPCGW20F9BFD1
+    Metadata:
+      aws:cdk:path: SpringBootOnFargate/SpringBootOnFargateVpc/PublicSubnet2/DefaultRoute
+  SpringBootOnFargateVpcPublicSubnet2EIP5E4A2A8F:
+    Type: AWS::EC2::EIP
+    Properties:
+      Domain: vpc
+      Tags:
+        - Key: Name
+          Value: SpringBootOnFargate/SpringBootOnFargateVpc/PublicSubnet2
+    Metadata:
+      aws:cdk:path: SpringBootOnFargate/SpringBootOnFargateVpc/PublicSubnet2/EIP
+  SpringBootOnFargateVpcPublicSubnet2NATGateway441784C2:
+    Type: AWS::EC2::NatGateway
+    Properties:
+      SubnetId:
+        Ref: SpringBootOnFargateVpcPublicSubnet2Subnet7AC4180E
+      AllocationId:
+        Fn::GetAtt:
+          - SpringBootOnFargateVpcPublicSubnet2EIP5E4A2A8F
+          - AllocationId
+      Tags:
+        - Key: Name
+          Value: SpringBootOnFargate/SpringBootOnFargateVpc/PublicSubnet2
+    DependsOn:
+      - SpringBootOnFargateVpcPublicSubnet2DefaultRoute55EEEF14
+      - SpringBootOnFargateVpcPublicSubnet2RouteTableAssociationAECAA1D0
+    Metadata:
+      aws:cdk:path: SpringBootOnFargate/SpringBootOnFargateVpc/PublicSubnet2/NATGateway
+  SpringBootOnFargateVpcPublicSubnet3Subnet00D37EE8:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId:
+        Ref: SpringBootOnFargateVpc2AFBEEAB
+      AvailabilityZone: eu-central-1c
+      CidrBlock: 10.0.64.0/19
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: aws-cdk:subnet-name
+          Value: Public
+        - Key: aws-cdk:subnet-type
+          Value: Public
+        - Key: Name
+          Value: SpringBootOnFargate/SpringBootOnFargateVpc/PublicSubnet3
+    Metadata:
+      aws:cdk:path: SpringBootOnFargate/SpringBootOnFargateVpc/PublicSubnet3/Subnet
+  SpringBootOnFargateVpcPublicSubnet3RouteTableB18D630A:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:
+        Ref: SpringBootOnFargateVpc2AFBEEAB
+      Tags:
+        - Key: Name
+          Value: SpringBootOnFargate/SpringBootOnFargateVpc/PublicSubnet3
+    Metadata:
+      aws:cdk:path: SpringBootOnFargate/SpringBootOnFargateVpc/PublicSubnet3/RouteTable
+  SpringBootOnFargateVpcPublicSubnet3RouteTableAssociation115A8963:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: SpringBootOnFargateVpcPublicSubnet3RouteTableB18D630A
+      SubnetId:
+        Ref: SpringBootOnFargateVpcPublicSubnet3Subnet00D37EE8
+    Metadata:
+      aws:cdk:path: SpringBootOnFargate/SpringBootOnFargateVpc/PublicSubnet3/RouteTableAssociation
+  SpringBootOnFargateVpcPublicSubnet3DefaultRouteB2E11B95:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId:
+        Ref: SpringBootOnFargateVpcPublicSubnet3RouteTableB18D630A
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId:
+        Ref: SpringBootOnFargateVpcIGW8EC4670F
+    DependsOn:
+      - SpringBootOnFargateVpcVPCGW20F9BFD1
+    Metadata:
+      aws:cdk:path: SpringBootOnFargate/SpringBootOnFargateVpc/PublicSubnet3/DefaultRoute
+  SpringBootOnFargateVpcPublicSubnet3EIP12E1969A:
+    Type: AWS::EC2::EIP
+    Properties:
+      Domain: vpc
+      Tags:
+        - Key: Name
+          Value: SpringBootOnFargate/SpringBootOnFargateVpc/PublicSubnet3
+    Metadata:
+      aws:cdk:path: SpringBootOnFargate/SpringBootOnFargateVpc/PublicSubnet3/EIP
+  SpringBootOnFargateVpcPublicSubnet3NATGateway9B6639C2:
+    Type: AWS::EC2::NatGateway
+    Properties:
+      SubnetId:
+        Ref: SpringBootOnFargateVpcPublicSubnet3Subnet00D37EE8
+      AllocationId:
+        Fn::GetAtt:
+          - SpringBootOnFargateVpcPublicSubnet3EIP12E1969A
+          - AllocationId
+      Tags:
+        - Key: Name
+          Value: SpringBootOnFargate/SpringBootOnFargateVpc/PublicSubnet3
+    DependsOn:
+      - SpringBootOnFargateVpcPublicSubnet3DefaultRouteB2E11B95
+      - SpringBootOnFargateVpcPublicSubnet3RouteTableAssociation115A8963
+    Metadata:
+      aws:cdk:path: SpringBootOnFargate/SpringBootOnFargateVpc/PublicSubnet3/NATGateway
+  SpringBootOnFargateVpcPrivateSubnet1SubnetA9C231C6:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId:
+        Ref: SpringBootOnFargateVpc2AFBEEAB
+      AvailabilityZone: eu-central-1a
+      CidrBlock: 10.0.96.0/19
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: aws-cdk:subnet-name
+          Value: Private
+        - Key: aws-cdk:subnet-type
+          Value: Private
+        - Key: Name
+          Value: SpringBootOnFargate/SpringBootOnFargateVpc/PrivateSubnet1
+    Metadata:
+      aws:cdk:path: SpringBootOnFargate/SpringBootOnFargateVpc/PrivateSubnet1/Subnet
+  SpringBootOnFargateVpcPrivateSubnet1RouteTable9CFBB12D:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:
+        Ref: SpringBootOnFargateVpc2AFBEEAB
+      Tags:
+        - Key: Name
+          Value: SpringBootOnFargate/SpringBootOnFargateVpc/PrivateSubnet1
+    Metadata:
+      aws:cdk:path: SpringBootOnFargate/SpringBootOnFargateVpc/PrivateSubnet1/RouteTable
+  SpringBootOnFargateVpcPrivateSubnet1RouteTableAssociation04C070A2:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: SpringBootOnFargateVpcPrivateSubnet1RouteTable9CFBB12D
+      SubnetId:
+        Ref: SpringBootOnFargateVpcPrivateSubnet1SubnetA9C231C6
+    Metadata:
+      aws:cdk:path: SpringBootOnFargate/SpringBootOnFargateVpc/PrivateSubnet1/RouteTableAssociation
+  SpringBootOnFargateVpcPrivateSubnet1DefaultRoute5B57F8D9:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId:
+        Ref: SpringBootOnFargateVpcPrivateSubnet1RouteTable9CFBB12D
+      DestinationCidrBlock: 0.0.0.0/0
+      NatGatewayId:
+        Ref: SpringBootOnFargateVpcPublicSubnet1NATGateway178EBF52
+    Metadata:
+      aws:cdk:path: SpringBootOnFargate/SpringBootOnFargateVpc/PrivateSubnet1/DefaultRoute
+  SpringBootOnFargateVpcPrivateSubnet2Subnet9C92086B:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId:
+        Ref: SpringBootOnFargateVpc2AFBEEAB
+      AvailabilityZone: eu-central-1b
+      CidrBlock: 10.0.128.0/19
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: aws-cdk:subnet-name
+          Value: Private
+        - Key: aws-cdk:subnet-type
+          Value: Private
+        - Key: Name
+          Value: SpringBootOnFargate/SpringBootOnFargateVpc/PrivateSubnet2
+    Metadata:
+      aws:cdk:path: SpringBootOnFargate/SpringBootOnFargateVpc/PrivateSubnet2/Subnet
+  SpringBootOnFargateVpcPrivateSubnet2RouteTable620E4D87:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:
+        Ref: SpringBootOnFargateVpc2AFBEEAB
+      Tags:
+        - Key: Name
+          Value: SpringBootOnFargate/SpringBootOnFargateVpc/PrivateSubnet2
+    Metadata:
+      aws:cdk:path: SpringBootOnFargate/SpringBootOnFargateVpc/PrivateSubnet2/RouteTable
+  SpringBootOnFargateVpcPrivateSubnet2RouteTableAssociation55F2570F:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: SpringBootOnFargateVpcPrivateSubnet2RouteTable620E4D87
+      SubnetId:
+        Ref: SpringBootOnFargateVpcPrivateSubnet2Subnet9C92086B
+    Metadata:
+      aws:cdk:path: SpringBootOnFargate/SpringBootOnFargateVpc/PrivateSubnet2/RouteTableAssociation
+  SpringBootOnFargateVpcPrivateSubnet2DefaultRoute97941963:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId:
+        Ref: SpringBootOnFargateVpcPrivateSubnet2RouteTable620E4D87
+      DestinationCidrBlock: 0.0.0.0/0
+      NatGatewayId:
+        Ref: SpringBootOnFargateVpcPublicSubnet2NATGateway441784C2
+    Metadata:
+      aws:cdk:path: SpringBootOnFargate/SpringBootOnFargateVpc/PrivateSubnet2/DefaultRoute
+  SpringBootOnFargateVpcPrivateSubnet3SubnetB9DE1664:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId:
+        Ref: SpringBootOnFargateVpc2AFBEEAB
+      AvailabilityZone: eu-central-1c
+      CidrBlock: 10.0.160.0/19
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: aws-cdk:subnet-name
+          Value: Private
+        - Key: aws-cdk:subnet-type
+          Value: Private
+        - Key: Name
+          Value: SpringBootOnFargate/SpringBootOnFargateVpc/PrivateSubnet3
+    Metadata:
+      aws:cdk:path: SpringBootOnFargate/SpringBootOnFargateVpc/PrivateSubnet3/Subnet
+  SpringBootOnFargateVpcPrivateSubnet3RouteTableA5692DF0:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:
+        Ref: SpringBootOnFargateVpc2AFBEEAB
+      Tags:
+        - Key: Name
+          Value: SpringBootOnFargate/SpringBootOnFargateVpc/PrivateSubnet3
+    Metadata:
+      aws:cdk:path: SpringBootOnFargate/SpringBootOnFargateVpc/PrivateSubnet3/RouteTable
+  SpringBootOnFargateVpcPrivateSubnet3RouteTableAssociation38BAC99A:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: SpringBootOnFargateVpcPrivateSubnet3RouteTableA5692DF0
+      SubnetId:
+        Ref: SpringBootOnFargateVpcPrivateSubnet3SubnetB9DE1664
+    Metadata:
+      aws:cdk:path: SpringBootOnFargate/SpringBootOnFargateVpc/PrivateSubnet3/RouteTableAssociation
+  SpringBootOnFargateVpcPrivateSubnet3DefaultRouteF9BC29E3:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId:
+        Ref: SpringBootOnFargateVpcPrivateSubnet3RouteTableA5692DF0
+      DestinationCidrBlock: 0.0.0.0/0
+      NatGatewayId:
+        Ref: SpringBootOnFargateVpcPublicSubnet3NATGateway9B6639C2
+    Metadata:
+      aws:cdk:path: SpringBootOnFargate/SpringBootOnFargateVpc/PrivateSubnet3/DefaultRoute
+  SpringBootOnFargateVpcIGW8EC4670F:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+        - Key: Name
+          Value: SpringBootOnFargate/SpringBootOnFargateVpc
+    Metadata:
+      aws:cdk:path: SpringBootOnFargate/SpringBootOnFargateVpc/IGW
+  SpringBootOnFargateVpcVPCGW20F9BFD1:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId:
+        Ref: SpringBootOnFargateVpc2AFBEEAB
+      InternetGatewayId:
+        Ref: SpringBootOnFargateVpcIGW8EC4670F
+    Metadata:
+      aws:cdk:path: SpringBootOnFargate/SpringBootOnFargateVpc/VPCGW
+  SpringBootOnFargateClusterD7234F19:
+    Type: AWS::ECS::Cluster
+    Metadata:
+      aws:cdk:path: SpringBootOnFargate/SpringBootOnFargateCluster/Resource
+  SpringBootOnFargateFargateServiceLB282812F5:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      LoadBalancerAttributes:
+        - Key: deletion_protection.enabled
+          Value: "false"
+      Scheme: internet-facing
+      SecurityGroups:
+        - Fn::GetAtt:
+            - SpringBootOnFargateFargateServiceLBSecurityGroupF4DF2C4A
+            - GroupId
+      Subnets:
+        - Ref: SpringBootOnFargateVpcPublicSubnet1Subnet0FFC9326
+        - Ref: SpringBootOnFargateVpcPublicSubnet2Subnet7AC4180E
+        - Ref: SpringBootOnFargateVpcPublicSubnet3Subnet00D37EE8
+      Type: application
+    DependsOn:
+      - SpringBootOnFargateVpcPublicSubnet1DefaultRoute37FB12E3
+      - SpringBootOnFargateVpcPublicSubnet1RouteTableAssociationE5DF8C67
+      - SpringBootOnFargateVpcPublicSubnet2DefaultRoute55EEEF14
+      - SpringBootOnFargateVpcPublicSubnet2RouteTableAssociationAECAA1D0
+      - SpringBootOnFargateVpcPublicSubnet3DefaultRouteB2E11B95
+      - SpringBootOnFargateVpcPublicSubnet3RouteTableAssociation115A8963
+    Metadata:
+      aws:cdk:path: SpringBootOnFargate/SpringBootOnFargateFargateService/LB/Resource
+  SpringBootOnFargateFargateServiceLBSecurityGroupF4DF2C4A:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Automatically created Security Group for ELB SpringBootOnFargateSpringBootOnFargateFargateServiceLBD340A07A
+      SecurityGroupIngress:
+        - CidrIp: 0.0.0.0/0
+          Description: Allow from anyone on port 80
+          FromPort: 80
+          IpProtocol: tcp
+          ToPort: 80
+      VpcId:
+        Ref: SpringBootOnFargateVpc2AFBEEAB
+    Metadata:
+      aws:cdk:path: SpringBootOnFargate/SpringBootOnFargateFargateService/LB/SecurityGroup/Resource
+  SpringBootOnFargateFargateServiceLBSecurityGrouptoSpringBootOnFargateSpringBootOnFargateFargateServiceSecurityGroup52CC4495802F158792:
+    Type: AWS::EC2::SecurityGroupEgress
+    Properties:
+      GroupId:
+        Fn::GetAtt:
+          - SpringBootOnFargateFargateServiceLBSecurityGroupF4DF2C4A
+          - GroupId
+      IpProtocol: tcp
+      Description: Load balancer to target
+      DestinationSecurityGroupId:
+        Fn::GetAtt:
+          - SpringBootOnFargateFargateServiceSecurityGroupC12CD996
+          - GroupId
+      FromPort: 80
+      ToPort: 80
+    Metadata:
+      aws:cdk:path: SpringBootOnFargate/SpringBootOnFargateFargateService/LB/SecurityGroup/to SpringBootOnFargateSpringBootOnFargateFargateServiceSecurityGroup52CC4495:80
+  SpringBootOnFargateFargateServiceLBPublicListenerA9942CE0:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      DefaultActions:
+        - TargetGroupArn:
+            Ref: SpringBootOnFargateFargateServiceLBPublicListenerECSGroup0B41FD31
+          Type: forward
+      LoadBalancerArn:
+        Ref: SpringBootOnFargateFargateServiceLB282812F5
+      Port: 80
+      Protocol: HTTP
+    Metadata:
+      aws:cdk:path: SpringBootOnFargate/SpringBootOnFargateFargateService/LB/PublicListener/Resource
+  SpringBootOnFargateFargateServiceLBPublicListenerECSGroup0B41FD31:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      Port: 80
+      Protocol: HTTP
+      TargetGroupAttributes:
+        - Key: stickiness.enabled
+          Value: "false"
+      TargetType: ip
+      VpcId:
+        Ref: SpringBootOnFargateVpc2AFBEEAB
+    Metadata:
+      aws:cdk:path: SpringBootOnFargate/SpringBootOnFargateFargateService/LB/PublicListener/ECSGroup/Resource
+  SpringBootOnFargateFargateServiceTaskDefTaskRole615C3A10:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: ecs-tasks.amazonaws.com
+        Version: "2012-10-17"
+    Metadata:
+      aws:cdk:path: SpringBootOnFargate/SpringBootOnFargateFargateService/TaskDef/TaskRole/Resource
+  SpringBootOnFargateFargateServiceTaskDefADE0E679:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      ContainerDefinitions:
+        - Environment:
+            - Name: name
+              Value: Serverless Fargate
+          Essential: true
+          Image: beyondjava/jib-docker-image
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-group:
+                Ref: SpringBootOnFargateFargateServiceTaskDefwebLogGroup7091AE1E
+              awslogs-stream-prefix: SpringBootOnFargateFargateService
+              awslogs-region: eu-central-1
+          Name: web
+          PortMappings:
+            - ContainerPort: 80
+              Protocol: tcp
+      Cpu: "256"
+      ExecutionRoleArn:
+        Fn::GetAtt:
+          - SpringBootOnFargateFargateServiceTaskDefExecutionRoleA1D035F8
+          - Arn
+      Family: SpringBootOnFargateSpringBootOnFargateFargateServiceTaskDef5FE3864F
+      Memory: "2048"
+      NetworkMode: awsvpc
+      RequiresCompatibilities:
+        - FARGATE
+      TaskRoleArn:
+        Fn::GetAtt:
+          - SpringBootOnFargateFargateServiceTaskDefTaskRole615C3A10
+          - Arn
+    Metadata:
+      aws:cdk:path: SpringBootOnFargate/SpringBootOnFargateFargateService/TaskDef/Resource
+  SpringBootOnFargateFargateServiceTaskDefwebLogGroup7091AE1E:
+    Type: AWS::Logs::LogGroup
+    UpdateReplacePolicy: Retain
+    DeletionPolicy: Retain
+    Metadata:
+      aws:cdk:path: SpringBootOnFargate/SpringBootOnFargateFargateService/TaskDef/web/LogGroup/Resource
+  SpringBootOnFargateFargateServiceTaskDefExecutionRoleA1D035F8:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: ecs-tasks.amazonaws.com
+        Version: "2012-10-17"
+    Metadata:
+      aws:cdk:path: SpringBootOnFargate/SpringBootOnFargateFargateService/TaskDef/ExecutionRole/Resource
+  SpringBootOnFargateFargateServiceTaskDefExecutionRoleDefaultPolicy20753AC8:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action:
+              - logs:CreateLogStream
+              - logs:PutLogEvents
+            Effect: Allow
+            Resource:
+              Fn::GetAtt:
+                - SpringBootOnFargateFargateServiceTaskDefwebLogGroup7091AE1E
+                - Arn
+        Version: "2012-10-17"
+      PolicyName: SpringBootOnFargateFargateServiceTaskDefExecutionRoleDefaultPolicy20753AC8
+      Roles:
+        - Ref: SpringBootOnFargateFargateServiceTaskDefExecutionRoleA1D035F8
+    Metadata:
+      aws:cdk:path: SpringBootOnFargate/SpringBootOnFargateFargateService/TaskDef/ExecutionRole/DefaultPolicy/Resource
+  SpringBootOnFargateFargateServiceA7AD30DE:
+    Type: AWS::ECS::Service
+    Properties:
+      Cluster:
+        Ref: SpringBootOnFargateClusterD7234F19
+      DeploymentConfiguration:
+        MaximumPercent: 200
+        MinimumHealthyPercent: 50
+      DesiredCount: 1
+      EnableECSManagedTags: false
+      HealthCheckGracePeriodSeconds: 60
+      LaunchType: FARGATE
+      LoadBalancers:
+        - ContainerName: web
+          ContainerPort: 80
+          TargetGroupArn:
+            Ref: SpringBootOnFargateFargateServiceLBPublicListenerECSGroup0B41FD31
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          AssignPublicIp: DISABLED
+          SecurityGroups:
+            - Fn::GetAtt:
+                - SpringBootOnFargateFargateServiceSecurityGroupC12CD996
+                - GroupId
+          Subnets:
+            - Ref: SpringBootOnFargateVpcPrivateSubnet1SubnetA9C231C6
+            - Ref: SpringBootOnFargateVpcPrivateSubnet2Subnet9C92086B
+            - Ref: SpringBootOnFargateVpcPrivateSubnet3SubnetB9DE1664
+      TaskDefinition:
+        Ref: SpringBootOnFargateFargateServiceTaskDefADE0E679
+    DependsOn:
+      - SpringBootOnFargateFargateServiceLBPublicListenerECSGroup0B41FD31
+      - SpringBootOnFargateFargateServiceLBPublicListenerA9942CE0
+    Metadata:
+      aws:cdk:path: SpringBootOnFargate/SpringBootOnFargateFargateService/Service/Service
+  SpringBootOnFargateFargateServiceSecurityGroupC12CD996:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: SpringBootOnFargate/SpringBootOnFargateFargateService/Service/SecurityGroup
+      SecurityGroupEgress:
+        - CidrIp: 0.0.0.0/0
+          Description: Allow all outbound traffic by default
+          IpProtocol: "-1"
+      VpcId:
+        Ref: SpringBootOnFargateVpc2AFBEEAB
+    Metadata:
+      aws:cdk:path: SpringBootOnFargate/SpringBootOnFargateFargateService/Service/SecurityGroup/Resource
+  SpringBootOnFargateFargateServiceSecurityGroupfromSpringBootOnFargateSpringBootOnFargateFargateServiceLBSecurityGroup6897C6A9803FC87848:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      IpProtocol: tcp
+      Description: Load balancer to target
+      FromPort: 80
+      GroupId:
+        Fn::GetAtt:
+          - SpringBootOnFargateFargateServiceSecurityGroupC12CD996
+          - GroupId
+      SourceSecurityGroupId:
+        Fn::GetAtt:
+          - SpringBootOnFargateFargateServiceLBSecurityGroupF4DF2C4A
+          - GroupId
+      ToPort: 80
+    Metadata:
+      aws:cdk:path: SpringBootOnFargate/SpringBootOnFargateFargateService/Service/SecurityGroup/from SpringBootOnFargateSpringBootOnFargateFargateServiceLBSecurityGroup6897C6A9:80
+  CDKMetadata:
+    Type: AWS::CDK::Metadata
+    Properties:
+      Analytics: v2:deflate64:H4sIAAAAAAAA/31STW/CMAz9LdxDNti0nRnbEBLaqhZxRWlqOkNIqnwUoar/fWlDacemnfz8+hzbz53Sxwc6GbGTGfPsMBaY0iqxjB+Ip7YV8CmtNgUn853cRHMSuVQgT1wqwTZcj2LlLKxZKqDne25mjOLILCp5FTfgbRk14YPZBbNwYmcSaSw97B9eSgva404QJrlkM+tn/TqCtCQB7jTa80IrV7Qz/Eu85RqM+UUvZcvXBLih1Vw447s3qg6+M52zZitzeIUdSux2umWUtAwl6AF3qU1Al8iDTwG27bYFs82qhs6KwrvcurVSLHthgkkO2U05CGYscuEVaatAmZf+XH9Xt0v8yIc69LvJi6bDg+9r39lfoDNykNYE2ZFWsQp3b2OkfF17qIBqIlTu3Vyp/PpEh+uaxGCU08GPT2cLF/6nC1sTqTKge3NXTp7o5Jnej/YGcaydtHgEGof4DYYiVDfIAgAA
+    Metadata:
+      aws:cdk:path: SpringBootOnFargate/CDKMetadata/Default
+Outputs:
+  SpringBootOnFargateFargateServiceLoadBalancerDNSDEDA79A8:
+    Value:
+      Fn::GetAtt:
+        - SpringBootOnFargateFargateServiceLB282812F5
+        - DNSName
+  SpringBootOnFargateFargateServiceServiceURL7C1E07D4:
+    Value:
+      Fn::Join:
+        - ""
+        - - http://
+          - Fn::GetAtt:
+              - SpringBootOnFargateFargateServiceLB282812F5
+              - DNSName
+Parameters:
+  BootstrapVersion:
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: /cdk-bootstrap/hnb659fds/version
+    Description: Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]
+Rules:
+  CheckBootstrapVersion:
+    Assertions:
+      - Assert:
+          Fn::Not:
+            - Fn::Contains:
+                - - "1"
+                  - "2"
+                  - "3"
+                  - "4"
+                  - "5"
+                - Ref: BootstrapVersion
+        AssertDescription: CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.
+
