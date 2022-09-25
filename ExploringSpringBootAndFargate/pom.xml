@@ -70,23 +70,6 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>com.google.cloud.tools</groupId>
-                <artifactId>jib-maven-plugin</artifactId>
-                <version>3.3.0</version>
-
-                <configuration>
-                    <container>
-                        <ports>
-                            <port>80</port>
-                        </ports>
-                    </container>
-                    <to>
-                        <image>beyondjava/jib-docker-image</image>
-                    </to>
-                </configuration>
-            </plugin>
-
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>

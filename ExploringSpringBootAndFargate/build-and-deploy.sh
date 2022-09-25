@@ -1,4 +1,9 @@
-export DOCKER_DEFAULT_PLATFORM='linux/amd64'
-DOCKER_DEFAULT_PLATFORM='linux/amd64' ./mvnw compile jib:dockerBuild
+# export DOCKER_DEFAULT_PLATFORM='linux/amd64'
+# DOCKER_DEFAULT_PLATFORM='linux/amd64' ./mvnw compile jib:dockerBuild
+# ./mvnw compile jib:dockerBuild
+./mvnw package
+./_buildDocker.sh
 cd cdk
-DOCKER_DEFAULT_PLATFORM='linux/amd64' npm run cdk deploy
+npm install
+# DOCKER_DEFAULT_PLATFORM='linux/amd64' npm run cdk deploy
+npm run cdk deploy
