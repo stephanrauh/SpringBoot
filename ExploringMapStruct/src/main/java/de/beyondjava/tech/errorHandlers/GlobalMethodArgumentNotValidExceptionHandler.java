@@ -1,12 +1,14 @@
 package de.beyondjava.tech.errorHandlers;
 
 import lombok.val;
+import org.springframework.context.MessageSourceResolvable;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.method.annotation.HandlerMethodValidationException;
 
 import java.util.List;
 
@@ -20,7 +22,23 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 @ControllerAdvice
 public class GlobalMethodArgumentNotValidExceptionHandler {
 
-    // @ResponseStatus(BAD_REQUEST)
+    @ResponseBody
+    @ExceptionHandler(HandlerMethodValidationException.class)
+    public ValidationErrorList handleValidationException(HandlerMethodValidationException e) {
+        var error = new ValidationErrorList(BAD_REQUEST.value(), e.getAllValidationResults().size() + " validation error(s) found.");
+        for (var fieldError : e.getAllValidationResults()) {
+            var message = "";
+            for (MessageSourceResolvable messageSourceResolvable : fieldError.getResolvableErrors()) {
+                message += messageSourceResolvable.getDefaultMessage();
+            }
+            error.getFieldErrors().add(new ValidationError("",
+                    fieldError.getMethodParameter().getParameterName(),
+                    message));
+        }
+        return error;
+    }
+
+
     @ResponseBody
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ValidationErrorList methodArgumentNotValidException(MethodArgumentNotValidException ex) {
